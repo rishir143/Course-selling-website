@@ -1,9 +1,9 @@
 import dotenv from "dotenv";
 import express from "express";
 import mongoose from "mongoose";
-import userRouter from "./router/user";
-import adminRouter from "./router/admin";
-import courseRouter from "./router/courses";
+import userRouter from "./router/user.js";
+import adminRouter from "./router/admin.js";
+import courseRouter from "./router/courses.js";
 
 dotenv.config();
 
@@ -17,10 +17,16 @@ app.use("/api/v1/course", courseRouter);
 
 // Server connection & Database initialization
 async function main() {
-  await mongoose.connect(process.env.MONGO_URL);
-  console.log("Connected to the Database");
+  try {
+    await mongoose.connect(process.env.MONGO_URL);
+    console.log("Connected to the Database");
 
-  app.listen(process.env.PORT, () => {
-    console.log(`the server is runing at the port ${process.env.PORT}`);
-  });
+    app.listen(process.env.PORT, () => {
+      console.log(`the server is runing at the port ${process.env.PORT}`);
+    });
+  } catch (error) {
+    console.error("Failed to connect to MongoDB:", error.message);
+  }
 }
+
+main();
