@@ -2,7 +2,9 @@
   "name": "course-selling-website",
   "version": "1.0.0",
   "main": "index.js",
+  "type": "module",
   "scripts": {
+    "start": "node index.js", 
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -16,5 +18,11 @@
     "url": "https://github.com/rishir143/Course-selling-website/issues"
   },
   "homepage": "https://github.com/rishir143/Course-selling-website#readme",
-  "description": ""
+  "description": "",
+  "dependencies": {
+    "bcrypt": "^6.0.0",
+    "dotenv": "^17.4.2",
+    "jsonwebtoken": "^9.0.3",
+    "mongoose": "^9.9.4"
+  }
 }
