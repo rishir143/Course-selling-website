@@ -18,11 +18,11 @@ adminRouter.post("/signup", async (req, res) => {
       firstName,
       lastName,
     });
-    return res.json({ message: "User signed up successfully" });
+    return res.json({ message: "Admin signed up successfully" });
   } catch (error) {
     return (
       res.status(400),
-      json({ message: "User already exists or invalid data" })
+      json({ message: "Admin already exists or invalid data" })
     );
   }
 });
@@ -30,13 +30,15 @@ adminRouter.post("/signup", async (req, res) => {
 adminRouter.post("/signin", async (req, res) => {
   try {
     const { email, password } = req.body;
-    const admin = await adminModel.find({ email });
+    const admin = await adminModel.findOne({ email });
 
     if (!admin) {
-      return res.status(403).json({ message: "Incorrect credentials" });
+      return res
+        .status(403)
+        .json({ message: "Incorrect credentials & admin not found" });
     }
 
-    const passwordMatch = await bcrypt.compare(password, admin.user);
+    const passwordMatch = await bcrypt.compare(password, admin.password);
 
     if (!passwordMatch) {
       return res.status(403).json({
@@ -45,7 +47,7 @@ adminRouter.post("/signin", async (req, res) => {
     }
 
     const token = jwt.sign({ id: admin._id }, JWT_ADMIN_SECRET);
-    return res.status(200).json(token);
+    return res.status(200).json({ token });
   } catch (error) {
     return res.status(403).json({
       message: "Incorrect credentials",
