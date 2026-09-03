@@ -21,10 +21,9 @@ userRouter.post("/signup", async (req, res) => {
 
     return res.json({ message: "User signed up successfully" });
   } catch (error) {
-    return (
-      res.status(400),
-      json({ message: "User already exists or invalid data" })
-    );
+    return res
+      .status(400)
+      .json({ message: "User already exists or invalid data" });
   }
 
   return res.json({ message: "user sign up end point" });
